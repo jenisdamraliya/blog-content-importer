@@ -22,6 +22,8 @@ class PostImporter
             'status' => 'draft',
             'source' => 'jsonplaceholder',
             'external_id' => $data['id'],
+            'price' => null,
+            'category' => null,
         ]);
     }
 
@@ -36,10 +38,12 @@ class PostImporter
 
         return $this->storeIfNotDuplicate([
             'title' => $data['title'],
-            'content' => "{$data['description']}\n\nPrice: \${$data['price']}\nCategory: {$data['category']}",
+            'content' => $data['description'],
             'status' => 'draft',
             'source' => 'fakestore',
             'external_id' => $data['id'],
+            'price' => $data['price'],
+            'category' => $data['category'],
         ]);
     }
 

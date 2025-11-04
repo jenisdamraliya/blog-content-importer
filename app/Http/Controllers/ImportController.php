@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Models\Post;
 
 use App\Services\PostImporter;
 
@@ -17,7 +18,7 @@ class ImportController extends Controller
     {
         $post = $this->importer->importFromJsonPlaceholder();
 
-        return redirect()->route('posts.index')
+        return redirect()->route('admin.show')
             ->with($post ? ['success' => 'Imported from JSONPlaceholder'] : ['danger' => 'Duplicate or failed']);
     }
 
@@ -25,8 +26,15 @@ class ImportController extends Controller
     {
         $post = $this->importer->importFromFakeStore();
 
-        return redirect()->route('posts.index')
+        return redirect()->route('admin.show')
             ->with($post ? ['success' => 'Imported from FakeStore'] : ['danger' => 'Duplicate or failed']);
     }
+
+    public function show()
+    {
+        $posts = Post::latest()->paginate(10);
+        return view('admin.show', compact('posts'));
+    }
+
 }
 

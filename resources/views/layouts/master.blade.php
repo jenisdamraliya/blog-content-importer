@@ -27,6 +27,17 @@
                     <li class="nav-item">
                         <a @class(['nav-link', 'active' => request()->routeIs('posts.*')]) href="{{ route('posts.index') }}">Posts</a>
                     </li>
+                    <li class="nav-item">
+                        @auth
+                            @if(auth()->user()->is_admin)
+                                <li class="nav-item">
+                                    <a @class(['nav-link', 'active' => request()->routeIs('admin.show')]) href="{{ route('admin.show') }}">
+                                        Import Posts
+                                    </a>
+                                </li>
+                            @endif
+                        @endauth
+                    </li>
                 </ul>
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                     @auth
